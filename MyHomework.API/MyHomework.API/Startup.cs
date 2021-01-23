@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using MyHomework.API.Persistance;
 using Microsoft.EntityFrameworkCore;
 using MyHomework.API.Persistance.Interfaces;
+using MyHomework.API.Services;
 
 
 namespace MyHomework.API
@@ -36,7 +37,7 @@ namespace MyHomework.API
                     Configuration.GetConnectionString("DefaultConnection")
                 ));
 
-
+            services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISubjectRepository, SubjectRepository>();
         }

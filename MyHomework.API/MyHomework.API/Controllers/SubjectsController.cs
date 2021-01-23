@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Template;
-using MyHomework.API.Persistance.Interfaces;
+using MyHomework.API.Services;
 
 namespace MyHomework.API.Controllers
 {
@@ -13,16 +13,16 @@ namespace MyHomework.API.Controllers
     [ApiController]
     public class SubjectsController : ControllerBase
     {
-        private readonly ISubjectRepository _subjectRepository;
-        public SubjectsController(ISubjectRepository subjectRepository) 
+        private readonly ISubjectService _subjectService;
+        public SubjectsController(ISubjectService subjectService) 
         {
-            _subjectRepository = subjectRepository;
+            _subjectService = subjectService;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _subjectRepository.GetAsync(id));
+            return Ok(await _subjectService.GetSubjectByIdAsync(id));
         }
     }
 }
