@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyHomework.API.Persistance;
 using Microsoft.EntityFrameworkCore;
+using MyHomework.API.Persistance.Interfaces;
+
 
 namespace MyHomework.API
 {
@@ -33,6 +35,9 @@ namespace MyHomework.API
                 (
                     Configuration.GetConnectionString("DefaultConnection")
                 ));
+
+
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
