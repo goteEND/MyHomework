@@ -1,10 +1,7 @@
 ﻿using MyHomework.API.Entities;
 using MyHomework.API.Persistance.Interfaces;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 
 namespace MyHomework.API.Persistance
