@@ -1,19 +1,30 @@
-﻿using MyHomework.API.Entities;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using MyHomework.API.Entities;
 using System.Threading.Tasks;
-using MyHomework.API.Persistance.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using MyHomework.API.Persistance;
 
 namespace MyHomework.API.Services
 {
     public class SubjectService : ISubjectService
     {
-        private readonly ISubjectRepository _subjectRepository;
-        public SubjectService(ISubjectRepository subjectRepository)
+        private readonly DataContext _dataContext;
+        public SubjectService(DataContext dataContext)
         {
-            _subjectRepository = subjectRepository;
+            _dataContext = dataContext;
         }
         public async Task<Subject> GetSubjectByIdAsync(int id)
         {
-            return await _subjectRepository.GetAsync(id);
+            return await _dataContext.Subjects
+                .FirstOrDefaultAsync(sbj => sbj.Id == id);
         }
-    }
+
+        public async Task<IEnumerable<Subject>> GetAllSubjectsAsync()
+        {
+            return await _dataContext.Subjects
+                .ToListAsync();
+        }
+    }   
 }

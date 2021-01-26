@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyHomework.API.Persistance;
 using Microsoft.EntityFrameworkCore;
-using MyHomework.API.Persistance.Interfaces;
 using MyHomework.API.Services;
 
 
@@ -23,7 +22,10 @@ namespace MyHomework.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
 
             services.AddDbContextPool<DataContext>(options =>
                 options.UseSqlServer
@@ -32,8 +34,7 @@ namespace MyHomework.API
                 ));
 
             services.AddScoped<ISubjectService, SubjectService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ISubjectRepository, SubjectRepository>();
+            services.AddScoped<IProjectService, ProjectService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

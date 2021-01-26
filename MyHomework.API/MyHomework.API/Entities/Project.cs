@@ -9,6 +9,7 @@ namespace MyHomework.API.Entities
         public string Description { get; set; }
         public string EnrolledStudent { get; set; }
         public string GithubLink { get; set; }
-        public DateTime? DueDate { get; set; } 
+        public DateTime? DueDate { get; set; }
+        public Subject Subject { get; set; }
     }
-}
+}       
