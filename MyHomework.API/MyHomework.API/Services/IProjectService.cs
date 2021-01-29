@@ -10,7 +10,7 @@ namespace MyHomework.API.Services
         Task<IEnumerable<Project>> GetAllProjectsBySubjectIdAsync(int id);
         Task<bool> CreateAsync(Project project);
             
-        Task<bool> EnrollInProjectAsync(int projectId,
+        Task<bool> EnrollInProjectAsync(int projectId,      
             int studentId,
             string githubLink);
 

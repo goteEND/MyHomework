@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -27,20 +28,31 @@ namespace MyHomework.API.Controllers
         }
 
 
-        // public
+        // students & professors
         [HttpGet("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(200, Type = typeof(SubjectForReturnDto))]
         public async Task<IActionResult> GetAsync(int id)
         {
             var subject = await _subjectService.GetSubjectByIdAsync(id);
+
+            if (subject == null)
+                return NoContent();
+
             var subjectForReturn = _mapper.Map<SubjectForReturnDto>(subject);   
             
             return Ok(subjectForReturn);
         }
 
         [HttpGet]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<SubjectForReturnDto>))]
         public async Task<IActionResult> GetAllAsync()
         {
             var subjects = await _subjectService.GetAllSubjectsAsync();
+
+            if (!subjects.Any())
+                return NoContent();
 
             var subjectsForReturn = _mapper.Map<IEnumerable<SubjectForReturnDto>>(subjects);
 
@@ -49,17 +61,19 @@ namespace MyHomework.API.Controllers
 
 
         [HttpGet("{id}/projects")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ProjectForReturnDto>))]
         public async Task<IActionResult> GetProjectsBySubjectId(int id)
         {
             var projects = await _projectService.GetAllProjectsBySubjectIdAsync(id);
+
+            if (!projects.Any())
+                return NoContent();
 
             var projectsForReturn = _mapper.Map<IEnumerable<ProjectForReturnDto>>(projects);
 
             return Ok(projectsForReturn);
         }
-
-
-
     }       
 }   
         
