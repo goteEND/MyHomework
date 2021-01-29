@@ -43,10 +43,10 @@ namespace MyHomework.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EnrolledStudent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EnrolledStudentId = table.Column<int>(type: "int", nullable: true),
                     GithubLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    SubjectId = table.Column<int>(type: "int", nullable: true)
+                    SubjectId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,8 +56,19 @@ namespace MyHomework.API.Migrations
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Projects_Users_EnrolledStudentId",
+                        column: x => x.EnrolledStudentId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_EnrolledStudentId",
+                table: "Projects",
+                column: "EnrolledStudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_SubjectId",
@@ -71,10 +82,10 @@ namespace MyHomework.API.Migrations
                 name: "Projects");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Subjects");
 
             migrationBuilder.DropTable(
-                name: "Subjects");
+                name: "Users");
         }
     }
 }

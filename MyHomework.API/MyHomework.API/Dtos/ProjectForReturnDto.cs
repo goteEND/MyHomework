@@ -1,17 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace MyHomework.API.Entities
+namespace MyHomework.API.Dtos
 {
-    public class Project
+    public class ProjectForReturnDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int? EnrolledStudentId { get; set; }
-        public User EnrolledStudent { get; set; }
         public string GithubLink { get; set; }
         public DateTime? DueDate { get; set; }
-        public int SubjectId { get; set; }  
-        public Subject Subject { get; set; }
+        public int SubjectId { get; set; }
     }
-}       
+}

@@ -1,5 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyHomework.API.Dtos;
+using MyHomework.API.Entities;
 using MyHomework.API.Services;
 
 namespace MyHomework.API.Controllers
@@ -10,34 +16,53 @@ namespace MyHomework.API.Controllers
     {
         private readonly ISubjectService _subjectService;
         private readonly IProjectService _projectService;
+        private readonly IMapper _mapper;
 
         public SubjectsController(
             ISubjectService subjectService,
-            IProjectService projectService
+            IProjectService projectService,
+            IMapper mapper
             )
         {
             _subjectService = subjectService;
             _projectService = projectService;
+            _mapper = mapper;
         }
 
+
+        // public
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
-            return Ok(await _subjectService.GetSubjectByIdAsync(id));
+            var subject = await _subjectService.GetSubjectByIdAsync(id);
+            var subjectForReturn = _mapper.Map<SubjectForReturnDto>(subject);   
+            
+            return Ok(subjectForReturn);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _subjectService.GetAllSubjectsAsync());
+            var subjects = await _subjectService.GetAllSubjectsAsync();
+
+            var subjectsForReturn = _mapper.Map<IEnumerable<SubjectForReturnDto>>(subjects);
+
+            return Ok(subjectsForReturn);
         }
 
 
         [HttpGet("{id}/projects")]
         public async Task<IActionResult> GetProjectsBySubjectId(int id)
         {
-            return Ok(await _projectService.GetAllProjectsBySubjectIdAsync(id));
+            var projects = await _projectService.GetAllProjectsBySubjectIdAsync(id);
+
+            var projectsForReturn = _mapper.Map<IEnumerable<ProjectForReturnDto>>(projects);
+
+            return Ok(projectsForReturn);
         }
-    }
+
+
+
+    }       
 }   
-    
+        

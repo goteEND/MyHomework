@@ -10,8 +10,8 @@ using MyHomework.API.Persistance;
 namespace MyHomework.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210126161733_UpdatedProjectEntity")]
-    partial class UpdatedProjectEntity
+    [Migration("20210129142952_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,8 +34,8 @@ namespace MyHomework.API.Migrations
                     b.Property<DateTime?>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EnrolledStudent")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("EnrolledStudentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("GithubLink")
                         .HasColumnType("nvarchar(max)");
@@ -43,10 +43,12 @@ namespace MyHomework.API.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SubjectId")
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EnrolledStudentId");
 
                     b.HasIndex("SubjectId");
 
@@ -91,9 +93,17 @@ namespace MyHomework.API.Migrations
 
             modelBuilder.Entity("MyHomework.API.Entities.Project", b =>
                 {
+                    b.HasOne("MyHomework.API.Entities.User", "EnrolledStudent")
+                        .WithMany()
+                        .HasForeignKey("EnrolledStudentId");
+
                     b.HasOne("MyHomework.API.Entities.Subject", "Subject")
                         .WithMany("Projects")
-                        .HasForeignKey("SubjectId");
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EnrolledStudent");
 
                     b.Navigation("Subject");
                 });

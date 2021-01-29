@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyHomework.API.Persistance;
 using Microsoft.EntityFrameworkCore;
+using MyHomework.API.Helpers;
 using MyHomework.API.Services;
 
 
@@ -35,6 +37,8 @@ namespace MyHomework.API
 
             services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<IProjectService, ProjectService>();
+
+            services.AddAutoMapper(typeof(ProjectMapperProfiles).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
