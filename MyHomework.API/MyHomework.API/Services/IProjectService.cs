@@ -8,16 +8,16 @@ namespace MyHomework.API.Services
     public interface IProjectService
     {
         Task<IEnumerable<Project>> GetAllProjectsBySubjectIdAsync(int id);
-        Task<bool> Create(Project project);
+        Task<bool> CreateAsync(Project project);
             
-        Task<bool> EnrollInProject(int projectId,
+        Task<bool> EnrollInProjectAsync(int projectId,
             int studentId,
             string githubLink);
 
-        Task<bool> Update(int projectId, ProjectForUpdateDto projectForUpdateDto);
+        Task<bool> UpdateAsync(int projectId, ProjectForUpdateDto projectForUpdateDto);
 
-        Task<Project> Get(int id);
-        Task<bool> Delete(int projectId);
-    }
+        Task<Project> GetAsync(int id);
+        Task<bool> DeleteAsync(int projectId);
+    }   
 }
         

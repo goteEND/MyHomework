@@ -30,18 +30,18 @@ namespace MyHomework.API.Services
             return subject.Projects;
         }
 
-        public async Task<bool> Create(Project project)
+        public async Task<bool> CreateAsync(Project project)
         {
-            _dataContext.Projects.Add(project);
+            await _dataContext.Projects.AddAsync(project);
 
             return await _dataContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> EnrollInProject(int projectId, int studentId, string githubLink)
+        public async Task<bool> EnrollInProjectAsync(int projectId, int studentId, string githubLink)
         {
             await UnEnrollFromAllProjectsInSubject(studentId, projectId);
 
-            var project = await Get(projectId);
+            var project = await GetAsync(projectId);
 
             project.EnrolledStudentId = studentId;
             project.GithubLink = githubLink;
@@ -49,9 +49,9 @@ namespace MyHomework.API.Services
             return await _dataContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> Update(int projectId, ProjectForUpdateDto projectForUpdateDto)
+        public async Task<bool> UpdateAsync(int projectId, ProjectForUpdateDto projectForUpdateDto)
         {
-            var project = await Get(projectId);
+            var project = await GetAsync(projectId);
 
             _mapper.Map(projectForUpdateDto, project);
 
@@ -59,13 +59,13 @@ namespace MyHomework.API.Services
         }
 
 
-        public async Task<Project> Get(int id)
+        public async Task<Project> GetAsync(int id)
             => await _dataContext.Projects
                 .FirstOrDefaultAsync(prj => prj.Id == id);
 
-        public async Task<bool> Delete(int projectId)
+        public async Task<bool> DeleteAsync(int projectId)
         {
-            _dataContext.Projects.Remove(await Get(projectId));
+            _dataContext.Projects.Remove(await GetAsync(projectId));
 
             return await _dataContext.SaveChangesAsync() > 0;
         }
