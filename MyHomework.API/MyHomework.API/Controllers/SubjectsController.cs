@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyHomework.API.Dtos;
-using MyHomework.API.Entities;
 using MyHomework.API.Services;
 
 namespace MyHomework.API.Controllers

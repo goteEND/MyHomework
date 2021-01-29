@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using MyHomework.API.Dtos;
 using MyHomework.API.Entities;
 
