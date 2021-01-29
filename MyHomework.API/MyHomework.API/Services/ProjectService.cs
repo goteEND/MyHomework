@@ -63,11 +63,11 @@ namespace MyHomework.API.Services
             => await _dataContext.Projects
                 .FirstOrDefaultAsync(prj => prj.Id == id);
 
-        //public async Task<bool> EnrollInProject(ProjectForEnrollmentDto projectForEnrollmentDto, int id)
-        //{
-        //    var projectFromDb =  Get(id);
+        public async Task<bool> Delete(int projectId)
+        {
+            _dataContext.Projects.Remove(await Get(projectId));
 
-
-        //}
+            return await _dataContext.SaveChangesAsync() > 0;
+        }
     }
 }

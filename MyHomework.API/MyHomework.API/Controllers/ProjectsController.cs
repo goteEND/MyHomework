@@ -28,15 +28,27 @@ namespace MyHomework.API.Controllers
         }
 
 
+
+        // student sau profesori
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var project = await _projectService.Get(id);
+
+            var projectForReturn = _mapper.Map<ProjectForReturnDto>(project);
+
+            return Ok(projectForReturn);
+        }
+            
         // studenti
 
         [HttpPatch("{projectId}/enrolledStudent/{studentId}")]
-        public async Task<IActionResult> EnrollInProject(int projectId,
+        public async Task<IActionResult> Enroll(int id,
             int studentId,
             ProjectForEnrollmentDto projectForEnrollmentDto)
         {
             var successResult = await _projectService
-                .EnrollInProject(projectId, studentId, projectForEnrollmentDto.GithubLink);
+                .EnrollInProject(id, studentId, projectForEnrollmentDto.GithubLink);
                 
             if (successResult)
              return Ok();
@@ -48,10 +60,10 @@ namespace MyHomework.API.Controllers
         // profesori
 
         [HttpPost]
-        public async Task<IActionResult> CreateProject([FromBody]ProjectForCreateDto projectForCreateDto)
+        public async Task<IActionResult> Create([FromBody]ProjectForCreateDto projectForCreateDto)
         {
             var project =
-                _mapper.Map<Project>(projectForCreateDto);
+                _mapper.Map<Project>(projectForCreateDto);  
 
 
             var isSuccess = await _projectService.Create(project);
@@ -64,17 +76,28 @@ namespace MyHomework.API.Controllers
                 "Something went wrong while saving the project in the database");
         }
 
-        [HttpPut("{projectId}")]
-
-        public async Task<IActionResult> Update(int projectId, [FromBody]ProjectForUpdateDto projectForUpdateDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody]ProjectForUpdateDto projectForUpdateDto)
         {
-            var successResult =  await _projectService.Update(projectId, projectForUpdateDto);
+            var successResult =  await _projectService.Update(id, projectForUpdateDto);
+
+            if (successResult)
+                return Ok();
+                
+            return Ok("blah");  
+        }   
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var successResult = await _projectService.Delete(id);
 
             if (successResult)
                 return Ok();
 
             return Ok("blah");
-        }   
-    }   
+        }
+
+    }
 }   
     

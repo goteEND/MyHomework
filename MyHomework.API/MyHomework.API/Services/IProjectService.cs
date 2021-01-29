@@ -15,7 +15,10 @@ namespace MyHomework.API.Services
             int studentId,
             string githubLink);
 
-        Task<bool> Update(int projectId, ProjectForUpdateDto projectForUpdateDto);  
+        Task<bool> Update(int projectId, ProjectForUpdateDto projectForUpdateDto);
+
+        Task<Project> Get(int id);
+        Task<bool> Delete(int projectId);
     }
 }
         
