@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,8 @@ namespace MyHomework.API.Services
 
         public async Task<bool> EnrollInProject(int projectId, int studentId, string githubLink)
         {
+            await UnEnrollFromAllProjectsInSubject(studentId, projectId);
+
             var project = await Get(projectId);
 
             project.EnrolledStudentId = studentId;
@@ -63,6 +66,24 @@ namespace MyHomework.API.Services
         public async Task<bool> Delete(int projectId)
         {
             _dataContext.Projects.Remove(await Get(projectId));
+
+            return await _dataContext.SaveChangesAsync() > 0;
+        }
+
+        private async Task<bool> UnEnrollFromAllProjectsInSubject(int studentId, int subjectId)
+        {
+            var projects = await _dataContext.Projects
+                .Where(prj => prj.EnrolledStudentId == studentId)
+                .ToListAsync();
+
+            if (!projects.Any())
+                return true;
+
+            foreach (var project in projects)
+            {
+                project.EnrolledStudentId = null;
+                project.GithubLink = null;
+            }
 
             return await _dataContext.SaveChangesAsync() > 0;
         }

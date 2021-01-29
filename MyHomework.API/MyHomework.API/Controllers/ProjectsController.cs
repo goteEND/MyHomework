@@ -38,7 +38,7 @@ namespace MyHomework.API.Controllers
             
         // studenti
 
-        [HttpPatch("{projectId}/enrolledStudent/{studentId}")]
+        [HttpPatch("{id}/enrolledStudent/{studentId}")]
         public async Task<IActionResult> Enroll(int id,
             int studentId,
             ProjectForEnrollmentDto projectForEnrollmentDto)
