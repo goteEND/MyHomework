@@ -11,3 +11,4 @@ namespace MyHomework.API.Dtos
         public string Token { get; set; }
     }
 }
+    

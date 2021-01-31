@@ -17,6 +17,7 @@ namespace MyHomework.API.Helpers
             CreateMap<Subject, SubjectForReturnDto>();
 
             CreateMap<UserForRegistrationDto, AppUser>();
+            CreateMap<AppUser, EnrolledStudentDto>();
         }
     }
 }

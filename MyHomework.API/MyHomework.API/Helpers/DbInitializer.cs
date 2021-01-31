@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyHomework.API.Entities;
+using MyHomework.API.Persistence;
 using Newtonsoft.Json;
 
 namespace MyHomework.API.Helpers
 {
     public class DbInitializer
     {
-        public static async Task SeedData(UserManager<AppUser> userManager,
-            RoleManager<AppRole> roleManager)
+        public static async Task SeedData(
+            UserManager<AppUser> userManager,
+            RoleManager<AppRole> roleManager,
+            DataContext dataContext)
         {
             if (await userManager.Users.AnyAsync())
                 return;
@@ -51,6 +54,22 @@ namespace MyHomework.API.Helpers
             
                 await userManager.AddToRoleAsync(user, Convert.ToString(dynamicUser.UserRoleForSeed));
             }
+
+
+
+
+            var subjectsData = await File.ReadAllTextAsync("Helpers/DataForSeed/Subjects.json");
+            var subjects = JsonConvert.DeserializeObject<List<Subject>>(subjectsData);
+          
+            await dataContext.Subjects.AddRangeAsync(subjects);
+            await dataContext.SaveChangesAsync();
+
+
+            var projectsData = await File.ReadAllTextAsync("Helpers/DataForSeed/Projects.json");
+            var projects = JsonConvert.DeserializeObject<List<Project>>(projectsData);
+
+            await dataContext.Projects.AddRangeAsync(projects);
+            await dataContext.SaveChangesAsync();
         }
     }
-}
+}   

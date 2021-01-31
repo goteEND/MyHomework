@@ -67,7 +67,7 @@ namespace MyHomework.API.Controllers
         {
             var projects = await _projectService.GetAllProjectsBySubjectIdAsync(id);
 
-            if (!projects.Any())
+            if (projects == null || !projects.Any())
                 return NoContent();
 
             var projectsForReturn = _mapper.Map<IEnumerable<ProjectForReturnDto>>(projects);

@@ -25,9 +25,10 @@ namespace MyHomework.API.Services
         {
             var subject = await _dataContext.Subjects
                 .Include(sbj => sbj.Projects)
+                .ThenInclude(prj => prj.EnrolledStudent)
                 .FirstOrDefaultAsync(sbj => sbj.Id == id);
 
-            return subject.Projects;
+            return subject?.Projects;
         }
 
         public async Task<bool> CreateAsync(Project project)

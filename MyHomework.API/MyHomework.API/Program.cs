@@ -26,7 +26,7 @@ namespace MyHomework.API
                 var userManager = services.GetRequiredService<UserManager<AppUser>>();
                 var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
                 await context.Database.MigrateAsync();
-                await DbInitializer.SeedData(userManager, roleManager);
+                await DbInitializer.SeedData(userManager, roleManager, context);
             }
             catch (Exception ex)
             {
