@@ -65,9 +65,29 @@ namespace MyHomework.API.Helpers
 
 
             var projectsData = await File.ReadAllTextAsync("Helpers/DataForSeed/Projects.json");
-            var projects = JsonConvert.DeserializeObject<List<Project>>(projectsData);
+            var projects = JsonConvert.DeserializeObject<List<dynamic>>(projectsData);
 
-            await dataContext.Projects.AddRangeAsync(projects);
+            var projectList = new List<Project>();
+            foreach (var dynamicProject in projects)
+            {
+                string subjectName = Convert.ToString(dynamicProject.SubjectName);
+
+                var subject = await dataContext.Subjects
+                    .FirstOrDefaultAsync(sbj => sbj.Name == subjectName);
+
+
+                var project = new Project
+                {
+                    Description = Convert.ToString(dynamicProject.Description),
+                    Name = Convert.ToString(dynamicProject.Name),
+                    SubjectId = subject.Id  
+                };
+
+                projectList.Add(project);
+            }   
+
+
+            await dataContext.Projects.AddRangeAsync(projectList);
             await dataContext.SaveChangesAsync();
         }
     }
