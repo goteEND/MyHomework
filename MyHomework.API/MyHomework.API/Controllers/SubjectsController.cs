@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyHomework.API.Dtos;
 using MyHomework.API.Services;
@@ -10,6 +11,7 @@ namespace MyHomework.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SubjectsController : ControllerBase
     {
         private readonly ISubjectService _subjectService;
@@ -28,7 +30,6 @@ namespace MyHomework.API.Controllers
         }
 
 
-        // students & professors
         [HttpGet("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(200, Type = typeof(SubjectForReturnDto))]

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyHomework.API.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using MyHomework.API.Dtos;
 using MyHomework.API.Entities;
@@ -27,8 +28,8 @@ namespace MyHomework.API.Controllers
         }
 
 
-        // student sau profesori
         [HttpGet("{id}", Name = "GetProject")]
+        [Authorize]
         [ProducesResponseType(204)]
         [ProducesResponseType(200, Type = typeof(ProjectForReturnDto))]
         public async Task<IActionResult> GetAsync(int id)
@@ -43,8 +44,8 @@ namespace MyHomework.API.Controllers
             return Ok(projectForReturn);
         }
             
-        // studenti
         [HttpPatch("{id}/enrolledStudent/{studentId}")]
+        [Authorize(Roles = "Student")]
         [ProducesResponseType(400)]
         [ProducesResponseType(200)]
         public async Task<IActionResult> EnrollAsync(int id,
@@ -70,8 +71,8 @@ namespace MyHomework.API.Controllers
         }
 
 
-        // profesori
         [HttpPost]
+        [Authorize(Roles = "Professor")]
         [ProducesResponseType(400)]
         [ProducesResponseType(201, Type = typeof(ProjectForReturnDto))]
         public async Task<IActionResult> CreateAsync([FromBody]ProjectForCreateDto projectForCreateDto)
@@ -95,6 +96,7 @@ namespace MyHomework.API.Controllers
         }   
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Professor")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody]ProjectForUpdateDto projectForUpdateDto)
@@ -113,6 +115,7 @@ namespace MyHomework.API.Controllers
         }   
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Professor")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         public async Task<IActionResult> DeleteAsync(int id)

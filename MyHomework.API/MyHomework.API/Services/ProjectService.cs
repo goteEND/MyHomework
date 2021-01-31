@@ -62,6 +62,7 @@ namespace MyHomework.API.Services
 
         public async Task<Project> GetAsync(int id)
             => await _dataContext.Projects
+                .Include(prj => prj.EnrolledStudent)
                 .FirstOrDefaultAsync(prj => prj.Id == id);
 
         public async Task<bool> DeleteAsync(int projectId)
