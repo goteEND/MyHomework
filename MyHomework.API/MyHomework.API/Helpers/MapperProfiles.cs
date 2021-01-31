@@ -4,17 +4,19 @@ using MyHomework.API.Entities;
 
 namespace MyHomework.API.Helpers
 {
-    public class ProjectMapperProfiles : Profile
+    public class MapperProfiles : Profile
     {
-        public ProjectMapperProfiles()
+        public MapperProfiles()
         {
             CreateMap<ProjectForCreateDto, Project>();
             CreateMap<ProjectForEnrollmentDto, Project>();
             CreateMap<ProjectForUpdateDto, Project>();
             CreateMap<Project, ProjectForReturnDto>();
-
+                
 
             CreateMap<Subject, SubjectForReturnDto>();
+
+            CreateMap<UserForRegistrationDto, AppUser>();
         }
     }
 }

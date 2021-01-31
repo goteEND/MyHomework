@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MyHomework.API.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using MyHomework.API.Helpers;
+using MyHomework.API.Persistence;
 using MyHomework.API.Services;
 
 
@@ -36,10 +36,13 @@ namespace MyHomework.API
                     Configuration.GetConnectionString("DefaultConnection")
                 ));
 
+            services.AddIdentityServices(Configuration);
+            services.AddScoped<ITokenService, TokenService>();
+
             services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<IProjectService, ProjectService>();
 
-            services.AddAutoMapper(typeof(ProjectMapperProfiles).Assembly);
+            services.AddAutoMapper(typeof(MapperProfiles).Assembly);
 
             services.AddSwaggerGen(c =>
             {
@@ -57,6 +60,7 @@ namespace MyHomework.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwagger();

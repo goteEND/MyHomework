@@ -5,7 +5,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MyHomework.API.Dtos;
 using MyHomework.API.Entities;
-using MyHomework.API.Persistance;
+using MyHomework.API.Persistence;
 
 namespace MyHomework.API.Services
 {

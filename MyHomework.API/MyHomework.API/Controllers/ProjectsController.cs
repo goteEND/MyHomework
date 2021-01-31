@@ -57,6 +57,7 @@ namespace MyHomework.API.Controllers
 
             // todo check if user exists and is legit
 
+            // todo don't allow teachers to enroll
 
             var successResult = await _projectService
                 .EnrollInProjectAsync(id, studentId, projectForEnrollmentDto.GithubLink);

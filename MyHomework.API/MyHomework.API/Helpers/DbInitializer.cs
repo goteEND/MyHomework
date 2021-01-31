@@ -1,0 +1,56 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using MyHomework.API.Entities;
+using Newtonsoft.Json;
+
+namespace MyHomework.API.Helpers
+{
+    public class DbInitializer
+    {
+        public static async Task SeedData(UserManager<AppUser> userManager,
+            RoleManager<AppRole> roleManager)
+        {
+            if (await userManager.Users.AnyAsync())
+                return;
+
+            var userData = await File.ReadAllTextAsync("Helpers/DataForSeed/Users.json");
+            var users = JsonConvert.DeserializeObject<List<dynamic>>(userData);
+            if (users == null)
+                return;
+
+            var roles = new List<AppRole>
+            {
+                new AppRole {Name = "Student"},
+                new AppRole {Name = "Professor"}
+            };
+
+            foreach (var role in roles)
+            {
+                await roleManager.CreateAsync(role);
+            }
+
+            foreach (var dynamicUser in users)
+            {
+
+                string userName = Convert.ToString(dynamicUser.UserName);
+                var user = new AppUser
+                {
+                    UserName = userName.ToLower(),
+                    FirstName = Convert.ToString(dynamicUser.FirstName),
+                    LastName = Convert.ToString(dynamicUser.LastName),
+                    Email = (Convert.ToString(dynamicUser.Email) + "@gmail.com")
+                };
+
+                await userManager.CreateAsync(user, "password");
+
+            
+                await userManager.AddToRoleAsync(user, Convert.ToString(dynamicUser.UserRoleForSeed));
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "UserName": "ionpopescu",
+    "UserRoleForSeed": "Professor",
+    "FirstName": "Ion",
+    "LastName": "Popescu",
+    "Email": "ionpopescu"
+  },
+  {
+    "UserName": "mihaidaramausi",
+    "UserRoleForSeed": "Student",
+    "FirstName": "Mihai",
+    "LastName": "Daramausi",
+    "Email": "mihaidaramausi"
+  },
+  {
+    "UserName": "alexmihaila",
+    "UserRoleForSeed": "Student",
+    "FirstName": "Alex",
+    "LastName": "Mihaila",
+    "Email": "alexmihaila"
+  }
+]

@@ -8,7 +8,7 @@ namespace MyHomework.API.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public int? EnrolledStudentId { get; set; }
-        public User EnrolledStudent { get; set; }
+        public AppUser EnrolledStudent { get; set; }
         public string GithubLink { get; set; }
         public DateTime? DueDate { get; set; }
         public int SubjectId { get; set; }  

@@ -2,7 +2,7 @@
 using MyHomework.API.Entities;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using MyHomework.API.Persistance;
+using MyHomework.API.Persistence;
 
 namespace MyHomework.API.Services
 {
