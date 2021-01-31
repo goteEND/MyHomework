@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using MyHomework.API.Dtos;
 using MyHomework.API.Entities;
+using MyHomework.API.Helpers.Extensions;
 
 namespace MyHomework.API.Controllers
 {
@@ -52,13 +53,15 @@ namespace MyHomework.API.Controllers
             int studentId,
             ProjectForEnrollmentDto projectForEnrollmentDto)
         {
+            var authenticatedUserId = User.GetUserId();
+            if (authenticatedUserId != studentId)
+                return BadRequest("You're not allowed to enroll other students than yourself.");
+
+
             var project = await _projectService.GetAsync(id);
             if (project == null)
                 return BadRequest($@"Project with id {id} does not exist");
 
-            // todo check if user exists and is legit
-
-            // todo don't allow teachers to enroll
 
             var successResult = await _projectService
                 .EnrollInProjectAsync(id, studentId, projectForEnrollmentDto.GithubLink);

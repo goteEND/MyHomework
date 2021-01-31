@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using MyHomework.API.Helpers;
+using MyHomework.API.Helpers.Extensions;
 using MyHomework.API.Persistence;
 using MyHomework.API.Services;
 
