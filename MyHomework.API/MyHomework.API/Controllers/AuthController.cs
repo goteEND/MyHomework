@@ -49,12 +49,7 @@ namespace MyHomework.API.Controllers
             if (!roleResult.Succeeded)
                 return BadRequest(result.Errors);
 
-            var userForReturn = new UserForReturnDto
-            {
-                Username = user.UserName,
-                Token = await _tokenService.CreateToken(user)
-            };
-            return Ok(userForReturn);
+            return Ok("Registration successful!");
         }
 
 
@@ -75,6 +70,7 @@ namespace MyHomework.API.Controllers
 
             var userForReturn = new UserForReturnDto
             {
+                Id = user.Id,
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user)
             };
