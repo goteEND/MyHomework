@@ -26,7 +26,7 @@
         v-model="password"
         counter
         :rules="passwordRules"
-        :type="password"
+        type="password"
         hint="At least 5 characters"
         label="Password"
       >
@@ -45,55 +45,54 @@
 
 <script>
 export default {
-  name: "Register",
+  name: 'Register',
   data: () => ({
-    isLoading: "",
-    error: "",
+    isLoading: '',
+    error: '',
     valid: true,
-    firstName: "",
-    firstNameRules: [(v) => !!v || "First name is required"],
-    lastName: "",
-    lastNameRules: [(v) => !!v || "Last name is required"],
-    email: "",
+    firstName: '',
+    firstNameRules: [v => !!v || 'First name is required'],
+    lastName: '',
+    lastNameRules: [v => !!v || 'Last name is required'],
+    email: '',
     emailRules: [
-      (v) => !!v || "E-mail is required",
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      v => !!v || 'E-mail is required',
+      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
     ],
-    password: "",
+    password: '',
     passwordRules: [
-      (v) => !!v || "Password is required",
-      (v) =>
-        (v && v.length >= 5) || "Password must be bigger than 5 characters",
+      v => !!v || 'Password is required',
+      v => (v && v.length >= 5) || 'Password must be bigger than 5 characters',
     ],
   }),
   methods: {
     validate() {
-      this.$refs.form.validate();
-      this.register();
+      this.$refs.form.validate()
+      this.register()
     },
     async register() {
-      this.isLoading = true;
+      this.isLoading = true
       try {
-        await this.$store.dispatch("signup", {
+        await this.$store.dispatch('signup', {
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.email,
           password: this.password,
-        });
+        })
       } catch (err) {
-        this.error = err.message || "Failed to register";
+        this.error = err.message || 'Failed to register'
       }
-      this.isLoading = false;
+      this.isLoading = false
     },
     changePage() {
-      (this.firstName = ""),
-        (this.lastName = ""),
-        (this.email = ""),
-        (this.password = ""),
-        this.$store.dispatch("authPage", "login");
+      ;(this.firstName = ''),
+        (this.lastName = ''),
+        (this.email = ''),
+        (this.password = ''),
+        this.$store.dispatch('authPage', 'login')
     },
   },
-};
+}
 </script>
 
 <style></style>

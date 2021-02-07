@@ -11,7 +11,7 @@ namespace MyHomework.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class SubjectsController : ControllerBase
     {
         private readonly ISubjectService _subjectService;

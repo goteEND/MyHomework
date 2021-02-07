@@ -11,7 +11,7 @@
       <v-text-field
         v-model="password"
         :rules="passwordRules"
-        :type="password"
+        type="password"
         label="Password"
       >
       </v-text-field>
@@ -29,40 +29,40 @@
 
 <script>
 export default {
-  name: "Login",
+  name: 'Login',
   data: () => ({
-    isLoading: "",
-    error: "",
+    isLoading: '',
+    error: '',
     valid: true,
-    username: "",
-    usernameRules: [(v) => !!v || "Username is required"],
-    password: "",
-    passwordRules: [(v) => !!v || "Password is required"],
+    username: '',
+    usernameRules: [v => !!v || 'Username is required'],
+    password: '',
+    passwordRules: [v => !!v || 'Password is required'],
   }),
   methods: {
     validate() {
-      this.$refs.form.validate();
-      this.signin();
+      this.$refs.form.validate()
+      this.signin()
     },
     async signin() {
-      this.isLoading = true;
+      this.isLoading = true
       try {
-        await this.$store.dispatch("signin", {
+        await this.$store.dispatch('signin', {
           username: this.username,
           password: this.password,
-        });
+        })
       } catch (err) {
-        this.error = err.message || "Failed to authenticate";
+        this.error = err.message || 'Failed to authenticate'
       }
-      this.isLoading = false;
+      this.isLoading = false
     },
     changePage() {
-      (this.username = ""),
-        (this.password = ""),
-        this.$store.dispatch("authPage", "register");
+      ;(this.username = ''),
+        (this.password = ''),
+        this.$store.dispatch('authPage', 'register')
     },
   },
-};
+}
 </script>
 
 <style></style>

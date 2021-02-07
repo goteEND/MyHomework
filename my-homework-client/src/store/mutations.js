@@ -1,10 +1,12 @@
 export default {
   setUser(state, payload) {
-    state.userId = payload.userId;
-    state.userName = payload.userName;
-    state.token = payload.token;
+    state.logedUser = payload.logedUser
+    state.token = payload.token
   },
   setAuthPage(state, payload) {
-    state.authPage = payload;
+    state.authPage = payload
   },
-};
+  setSelectedSubjectName(state, payload) {
+    state.selectedSubjectName = payload
+  },
+}

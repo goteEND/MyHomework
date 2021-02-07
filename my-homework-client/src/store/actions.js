@@ -1,48 +1,64 @@
-import axios from "axios";
+import axios from 'axios'
+import router from '../router/index'
+import VueJwtDecode from 'vue-jwt-decode'
 
 export default {
   async signin(context, payload) {
     const response = await axios.post(
-      "http://localhost:5000/api/Auth/authentication",
+      'http://localhost:5000/api/Auth/authentication',
       {
         username: payload.username,
         password: payload.password,
-      }
-    );
-    console.log(response);
-    const responseData = response;
-    if (responseData.ok) {
-      context.commit("setUser", {
-        userId: response.userId,
-        userName: response.userName,
-        token: response.token,
-      });
+      },
+    )
+    const responseData = response.data
+
+    if (response.status == 200) {
+      context.commit('setUser', {
+        logedUser: {
+          userId: responseData.id,
+          userName: responseData.username,
+          role: VueJwtDecode.decode(responseData.token).role,
+        },
+        token: responseData.token,
+      })
+      router.push('/')
     } else {
-      const error = new Error(responseData.message || "Failed to authenticate");
-      throw error;
+      const error = new Error(responseData.message || 'Failed to authenticate')
+      throw error
     }
   },
   async signup({ dispatch }, payload) {
     const response = await axios.post(
-      "http://localhost:5000/api/Auth/registration",
+      'http://localhost:5000/api/Auth/registration',
       {
         firstName: payload.firstName,
         lastName: payload.lastName,
         password: payload.password,
         email: payload.email,
-      }
-    );
-    const responseData = response;
-    if (!responseData.ok) {
-      const error = new Error(
-        responseData.message || "Failed to register your account"
-      );
-      throw error;
+      },
+    )
+    const responseData = response
+    if (responseData.ok) {
+      dispatch('authPage', 'login')
     } else {
-      dispatch("authPage", "login");
+      const error = new Error(
+        responseData.message || 'Failed to register your account',
+      )
+      throw error
     }
   },
-  authPage(context, payload) {
-    context.commit("setAuthPage", payload);
+  signOut(context, payload) {
+    context.commit('setUser', {
+      logedUser: payload,
+      token: payload,
+    })
+    router.push('/auth')
   },
-};
+  authPage(context, payload) {
+    context.commit('setAuthPage', payload)
+  },
+  selectedSubjectName(context, payload) {
+    context.commit('setSelectedSubjectName', payload)
+  },
+}

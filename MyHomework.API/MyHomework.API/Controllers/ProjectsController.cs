@@ -30,7 +30,7 @@ namespace MyHomework.API.Controllers
 
 
         [HttpGet("{id}", Name = "GetProject")]
-        [Authorize]
+        //[Authorize]
         [ProducesResponseType(204)]
         [ProducesResponseType(200, Type = typeof(ProjectForReturnDto))]
         public async Task<IActionResult> GetAsync(int id)
@@ -75,7 +75,7 @@ namespace MyHomework.API.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Professor")]
+        //[Authorize(Roles = "Professor")]
         [ProducesResponseType(400)]
         [ProducesResponseType(201, Type = typeof(ProjectForReturnDto))]
         public async Task<IActionResult> CreateAsync([FromBody]ProjectForCreateDto projectForCreateDto)
@@ -99,7 +99,7 @@ namespace MyHomework.API.Controllers
         }   
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Professor")]
+        //[Authorize(Roles = "Professor")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody]ProjectForUpdateDto projectForUpdateDto)
@@ -118,7 +118,7 @@ namespace MyHomework.API.Controllers
         }   
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Professor")]
+        //[Authorize(Roles = "Professor")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         public async Task<IActionResult> DeleteAsync(int id)
