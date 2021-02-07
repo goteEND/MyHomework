@@ -4,13 +4,16 @@ import VueJwtDecode from 'vue-jwt-decode'
 
 export default {
   async signin(context, payload) {
-    const response = await axios.post(
-      'http://localhost:5000/api/Auth/authentication',
-      {
+    const response = await axios({
+      method: 'post',
+      url: 'http://localhost:5000/api/Auth/authentication',
+      data: {
         username: payload.username,
         password: payload.password,
       },
-    )
+      headers: {},
+    })
+
     const responseData = response.data
 
     if (response.status == 200) {
@@ -22,22 +25,25 @@ export default {
         },
         token: responseData.token,
       })
-      router.push('/')
+      router.replace('/')
     } else {
       const error = new Error(responseData.message || 'Failed to authenticate')
       throw error
     }
   },
   async signup({ dispatch }, payload) {
-    const response = await axios.post(
-      'http://localhost:5000/api/Auth/registration',
-      {
+    const response = await axios({
+      method: 'post',
+      url: 'http://localhost:5000/api/Auth/registration',
+      data: {
         firstName: payload.firstName,
         lastName: payload.lastName,
         password: payload.password,
         email: payload.email,
       },
-    )
+      headers: {},
+    })
+
     const responseData = response
     if (responseData.ok) {
       dispatch('authPage', 'login')
@@ -53,7 +59,7 @@ export default {
       logedUser: payload,
       token: payload,
     })
-    router.push('/auth')
+    router.replace('/auth')
   },
   authPage(context, payload) {
     context.commit('setAuthPage', payload)

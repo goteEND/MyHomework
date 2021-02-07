@@ -11,4 +11,7 @@ export default {
   getSelectedSubjectName(store) {
     return store.selectedSubjectName
   },
+  isAuthenticated(store) {
+    return !!store.token
+  },
 }

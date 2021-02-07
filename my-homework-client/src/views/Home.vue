@@ -35,9 +35,16 @@ export default {
   },
   methods: {
     async getAllSubjects() {
-      const response = await axios.get('http://localhost:5000/api/subjects')
+      const response = await axios({
+        method: 'get',
+        url: 'http://localhost:5000/api/subjects',
+        data: {},
+        headers: {
+          Authorization: 'Bearer ' + this.$store.getters.getToken,
+        },
+      })
+
       this.subjects = response.data
-      console.log(this.subjects)
     },
     logout() {
       this.$store.dispatch('signOut', null)

@@ -158,9 +158,15 @@ export default {
       this.$refs.showDatePicker.save(date)
     },
     async deleteProject() {
-      const response = await axios.delete(
-        `http://localhost:5000/api/projects/${this.project.id}`,
-      )
+      const response = await axios({
+        method: 'delete',
+        url: `http://localhost:5000/api/projects/${this.project.id}`,
+        data: {},
+        headers: {
+          Authorization: 'Bearer ' + this.$store.getters.getToken,
+        },
+      })
+
       if (response.status == 204) {
         this.$emit('removeCard', this.project.id)
       }
@@ -178,10 +184,14 @@ export default {
       }
 
       // upp
-      await axios.put(
-        `http://localhost:5000/api/projects/${this.project.id}`,
-        this.project,
-      )
+      await axios({
+        method: 'put',
+        url: `http://localhost:5000/api/projects/${this.project.id}`,
+        data: this.project,
+        headers: {
+          Authorization: 'Bearer ' + this.$store.getters.getToken,
+        },
+      })
     },
     displayDate() {
       return moment(this.project.dueDate).format('YYYY-MM-DD')

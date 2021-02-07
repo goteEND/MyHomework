@@ -128,9 +128,14 @@ export default {
 
   methods: {
     async getProjectsBySubjectId() {
-      const response = await axios.get(
-        `http://localhost:5000/api/subjects/${this.$route.params.id}/projects`,
-      )
+      const response = await axios({
+        method: 'get',
+        url: `http://localhost:5000/api/subjects/${this.$route.params.id}/projects`,
+        data: {},
+        headers: {
+          Authorization: 'Bearer ' + this.$store.getters.getToken,
+        },
+      })
       this.projects = response.data
     },
 
@@ -149,10 +154,14 @@ export default {
 
       console.log(JSON.stringify(this.projectForCreateAndUpdate))
 
-      const response = await axios.post(
-        'http://localhost:5000/api/projects',
-        this.projectForCreateAndUpdate,
-      )
+      const response = await axios({
+        method: 'post',
+        url: 'http://localhost:5000/api/projects',
+        data: this.projectForCreateAndUpdate,
+        headers: {
+          Authorization: 'Bearer ' + this.$store.getters.getToken,
+        },
+      })
 
       console.log(response.status)
       if (response.status == 201) {
