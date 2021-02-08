@@ -1,6 +1,17 @@
 <template>
   <v-container>
     <v-form ref="form" v-model="valid" lazy-validation>
+      <v-alert
+        v-if="alert"
+        dense
+        outlined
+        type="error"
+        dismissible
+        transition="scale-transition"
+      >
+        {{ error }}
+      </v-alert>
+
       <v-text-field
         v-model="username"
         :rules="usernameRules"
@@ -16,7 +27,13 @@
       >
       </v-text-field>
 
-      <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
+      <v-btn
+        :disabled="!valid"
+        :loading="isLoading"
+        color="success"
+        class="mr-4"
+        @click="validate"
+      >
         Login
       </v-btn>
 
@@ -31,8 +48,9 @@
 export default {
   name: 'Login',
   data: () => ({
-    isLoading: '',
+    isLoading: false,
     error: '',
+    alert: false,
     valid: true,
     username: '',
     usernameRules: [v => !!v || 'Username is required'],
@@ -52,7 +70,8 @@ export default {
           password: this.password,
         })
       } catch (err) {
-        this.error = err.message || 'Failed to authenticate'
+        this.alert = true
+        this.error = 'Failed to authenticate'
       }
       this.isLoading = false
     },
@@ -65,4 +84,4 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped></style>

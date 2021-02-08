@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card @click="merge">{{ subject.name }}</v-card>
+    <v-card @click="merge" class="pa-3">{{ subject.name }}</v-card>
   </v-container>
 </template>
 

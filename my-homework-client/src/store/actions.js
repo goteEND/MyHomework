@@ -25,6 +25,12 @@ export default {
         },
         token: responseData.token,
       })
+      localStorage.setItem('logedUser', {
+        userId: responseData.id,
+        userName: responseData.username,
+        role: VueJwtDecode.decode(responseData.token).role,
+      })
+      localStorage.setItem('token', responseData.token)
       router.replace('/')
     } else {
       const error = new Error(responseData.message || 'Failed to authenticate')
@@ -54,11 +60,21 @@ export default {
       throw error
     }
   },
+  trySignIn(context) {
+    const token = localStorage.getItem('token')
+    const logedUser = localStorage.getItem('logedUser')
+
+    if (token && logedUser) {
+      context.commit('setUser', { logedUser, token })
+    }
+  },
   signOut(context, payload) {
     context.commit('setUser', {
       logedUser: payload,
       token: payload,
     })
+    localStorage.removeItem('logedUser')
+    localStorage.removeItem('token')
     router.replace('/auth')
   },
   authPage(context, payload) {

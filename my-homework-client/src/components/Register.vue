@@ -1,6 +1,17 @@
 <template>
   <v-container>
     <v-form ref="form" v-model="valid" lazy-validation>
+      <v-alert
+        v-if="alert"
+        dense
+        outlined
+        type="error"
+        dismissible
+        transition="scale-transition"
+      >
+        {{ error }}
+      </v-alert>
+
       <v-text-field
         v-model="firstName"
         :rules="firstNameRules"
@@ -32,7 +43,13 @@
       >
       </v-text-field>
 
-      <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
+      <v-btn
+        :disabled="!valid"
+        :loading="isLoading"
+        color="success"
+        class="mr-4"
+        @click="validate"
+      >
         Register
       </v-btn>
 
@@ -47,8 +64,9 @@
 export default {
   name: 'Register',
   data: () => ({
-    isLoading: '',
+    isLoading: false,
     error: '',
+    alert: false,
     valid: true,
     firstName: '',
     firstNameRules: [v => !!v || 'First name is required'],
@@ -80,7 +98,7 @@ export default {
           password: this.password,
         })
       } catch (err) {
-        this.error = err.message || 'Failed to register'
+        this.error = 'Failed to register'
       }
       this.isLoading = false
     },

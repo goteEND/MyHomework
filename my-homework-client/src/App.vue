@@ -17,6 +17,9 @@ export default {
   data: () => ({
     //
   }),
+  created() {
+    this.$store.dispatch('trySignIn')
+  },
 }
 </script>
 <style scoped>
