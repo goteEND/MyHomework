@@ -23,6 +23,9 @@ export default {
 }
 </script>
 <style scoped>
+#app {
+  transition: all 0.3s ease;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.3s;

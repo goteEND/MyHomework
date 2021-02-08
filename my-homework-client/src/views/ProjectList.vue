@@ -4,6 +4,7 @@
       <v-toolbar color="purple">
         <v-toolbar-title>{{ subjectName }}</v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn @click="$router.replace('/')">Back</v-btn>
       </v-toolbar>
 
       <v-dialog v-model="dialog" persistent max-width="600px">
@@ -89,6 +90,7 @@
         :project="project"
         :key="index"
         @removeCard="removeCard"
+        @getProjectsBySubjectId="getProjectsBySubjectId"
       />
     </v-card>
   </v-container>
@@ -149,10 +151,7 @@ export default {
     async createProject() {
       this.dialog = false
 
-      console.log(this.$route.params.id)
       this.projectForCreateAndUpdate.subjectId = this.$route.params.id
-
-      console.log(JSON.stringify(this.projectForCreateAndUpdate))
 
       const response = await axios({
         method: 'post',
@@ -163,7 +162,6 @@ export default {
         },
       })
 
-      console.log(response.status)
       if (response.status == 201) {
         this.projectForCreateAndUpdate = {
           name: null,

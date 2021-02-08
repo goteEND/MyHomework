@@ -21,16 +21,52 @@
           : 'No student enrolled yet.'
       }}
     </div>
-    <v-btn
-      v-if="
-        $store.getters.getLogedUser &&
-          $store.getters.getLogedUser.role == 'Student'
-      "
-      color="primary"
-      @click="enroll"
-      :disabled="project.enrolledStudent ? true : false"
-      >Enroll</v-btn
-    >
+
+    <v-dialog v-model="dialog" persistent max-width="600px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          v-if="
+            $store.getters.getLogedUser &&
+              $store.getters.getLogedUser.role == 'Student'
+          "
+          v-bind="attrs"
+          v-on="on"
+          color="primary"
+          :disabled="project.enrolledStudent ? true : false"
+        >
+          Enroll
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>
+          <span class="headline">Enroll in project: {{ project.name }}</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  label="GitHub Link*"
+                  v-model="enrollGitHub"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="dialog = false">
+            Close
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="enroll">
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-btn
       v-if="
         $store.getters.getLogedUser &&
@@ -38,8 +74,9 @@
       "
       color="primary"
       @click="deleteProject"
-      >Delete</v-btn
     >
+      Delete
+    </v-btn>
 
     <v-dialog
       v-if="
@@ -127,6 +164,7 @@ import moment from 'moment'
 export default {
   name: 'ProjectCard',
   data: () => ({
+    enrollGitHub: null,
     dialog: false,
     showDatePicker: false,
     projectForCreateAndUpdate: {
@@ -194,19 +232,23 @@ export default {
       })
     },
     displayDate() {
-      return moment(this.project.dueDate).format('YYYY-MM-DD')
+      return 'Due Date: ' + moment(this.project.dueDate).format('YYYY-MM-DD')
     },
     async enroll() {
-      await axios({
+      this.dialog = false
+      const response = await axios({
         method: 'patch',
         url: `http://localhost:5000/api/Projects/${this.project.id}/enrolledStudent/${this.$store.getters.getLogedUser.userId}`,
         data: {
-          githubLink: 'https://ww.hithub.com/lol',
+          githubLink: this.enrollGitHub,
         },
         headers: {
           Authorization: 'Bearer ' + this.$store.getters.getToken,
         },
       })
+      if (response.status == 200) {
+        this.$emit('getProjectsBySubjectId')
+      }
     },
   },
 }

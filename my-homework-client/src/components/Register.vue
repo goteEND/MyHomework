@@ -43,6 +43,10 @@
       >
       </v-text-field>
 
+      <p v-if="!!firstName || !!lastname">
+        Your username is {{ firstName }}{{ lastName }}
+      </p>
+
       <v-btn
         :disabled="!valid"
         :loading="isLoading"
