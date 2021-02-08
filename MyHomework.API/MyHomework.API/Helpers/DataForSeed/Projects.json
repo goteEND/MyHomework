@@ -1,22 +1,77 @@
 [
   {
-    "Name": "name 1",
-    "Description": "Description 1",
-    "SubjectName": "Algorithms"
+    "Name": "Magazin online",
+    "Description": "ASP.NET",
+    "SubjectName": "Tehnologii moderne de programare"
   },
   {
-    "Name": "name 2",
-    "Description": "Description 2",
-    "SubjectName": "Algorithms"
+    "Name": "Aplicatie pentru licitatii online",
+    "Description": "ASP.NET",
+    "SubjectName": "Tehnologii moderne de programare"
   },
   {
-    "Name": "name 3",
-    "Description": "Description 3",
-    "SubjectName": "Artificial Intelligence"
+    "Name": "Biblioteca virtuala cu imporumut carti",
+    "Description": "APS.NET",
+    "SubjectName": "Tehnologii moderne de programare"
   },
   {
-    "Name": "name 2",
-    "Description": "Description 2",
-    "SubjectName": "Mathematics"
+    "Name": "Rezervari",
+    "Description": "ASP.NET",
+    "SubjectName": "Tehnologii moderne de programare"
+  },
+  {
+    "Name": "Aplicatie de management stocuri",
+    "Description": "ASP.NET",
+    "SubjectName": "Tehnologii moderne de programare"
+  },
+  {
+    "Name": "Content management system",
+    "Description": "ASP.NET",
+    "SubjectName": "Inteligenta artificiala"
+  },
+  {
+    "Name": "Aplicatie de gestiune colete",
+    "Description": "ASP.NET",
+    "SubjectName": "Inteligenta artificiala"
+  },
+  {
+    "Name": "Prezenta online",
+    "Description": "ASP.NET",
+    "SubjectName": "Inteligenta artificiala"
+  },
+  {
+    "Name": "Catalog online",
+    "Description": "ASP.NET",
+    "SubjectName": "Inteligenta artificiala"
+  },
+  {
+    "Name": "Chestionare online",
+    "Description": "ASP.NET",
+    "SubjectName": "Inteligenta artificiala"
+  },
+  {
+    "Name": "Sistem de comenzi la domiciliu",
+    "Description": "ASP.NET",
+    "SubjectName": "Aplicatii cu baze de date"
+  },
+  {
+    "Name": "Comenzi Taxi online",
+    "Description": "ASP.NET",
+    "SubjectName": "Aplicatii cu baze de date"
+  },
+  {
+    "Name": "Inchirieri filme",
+    "Description": "ASP.NET",
+    "SubjectName": "Aplicatii cu baze de date"
+  },
+  {
+    "Name": "Organizarea concediilor angajatilor",
+    "Description": "ASP.NET",
+    "SubjectName": "Aplicatii cu baze de date"
+  },
+  {
+    "Name": "Pet hotel booking",
+    "Description": "ASP.NET",
+    "SubjectName": "Aplicatii cu baze de date"
   }
 ]
