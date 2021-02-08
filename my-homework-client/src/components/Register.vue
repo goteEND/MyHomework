@@ -43,7 +43,7 @@
       >
       </v-text-field>
 
-      <p v-if="!!firstName || !!lastname">
+      <p v-if="!!firstName || !!lastName">
         Your username is {{ firstName }}{{ lastName }}
       </p>
 
